@@ -43,7 +43,6 @@ const autoscroll = () => {
 }
 
 socket.on('message',(message) =>{
-    console.log(message)
     const html  = Mustache.render(messageTamplate, {
         username: message.username,
         message: message.text,
@@ -54,7 +53,6 @@ socket.on('message',(message) =>{
 })
 
 socket.on('locationMessage', (message) =>{
-    console.log(message)
     const html = Mustache.render(locationMessageTemplate, {
         username: message.username,
         url: message.url,
@@ -66,8 +64,6 @@ socket.on('locationMessage', (message) =>{
 
 
 socket.on('roomData', ({ room, users }) =>{
-    // console.log(room)
-    // console.log(users)
     const html = Mustache.render(sidebarTemplate, {
         room,
         users
@@ -80,14 +76,12 @@ $messageForm.addEventListener('submit', (e) =>{
 
     $messageFormButton.setAttribute('disabled', 'disabled')
 
-    // disable
     const message = e.target.elements.message.value
 
     socket.emit('sendMessage', message, (error) =>{
         $messageFormButton.removeAttribute('disabled')
         $messageFormInput.value = ''
         $messageFormInput.focus()
-        // console.log('The message was delivered!', message)
 
         // enable
         if(error){
@@ -123,13 +117,3 @@ socket.emit('join', { username, room }, (error) =>{
         location.href = '/'
     }
 } )
-
-
-// socket.on('countUpdated', (count) =>{
-//     console.log('The count has been updated!', count)
-// }) 
-
-// document.querySelector('#increment').addEventListener('click', () => {
-//     console.log('Clicked ')
-//     socket.emit('increment')
-// })

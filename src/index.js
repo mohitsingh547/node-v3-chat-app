@@ -20,14 +20,6 @@ app.use(express.static(publicDirectoryPath))
 let count = 0;
 
 io.on('connection', (socket) =>{
-    console.log('New WebSocket connection');
-    
-    // socket.emit('message', {
-    //     text: 'Welcome!',
-    //     createdAt: new Date().getTime()
-    // })
-    
-
     socket.on('join', ({username,room}, callback) =>{
         const {error, user} = addUser({ id: socket.id, username,room })
 
@@ -45,9 +37,6 @@ io.on('connection', (socket) =>{
         })
 
         callback()
-
-        // socket.emit, io.emit, socket.broadcast.emit
-        // io.to.emit, socket.broadcast.to.emit
     })
 
     socket.on('sendMessage', (message, callback) =>{
@@ -81,14 +70,6 @@ io.on('connection', (socket) =>{
 
         
     })
-    // socket.emit('countUpdated', count)
-
-    // socket.on('increment', () =>{
-    //     count++
-    //     //socket.emit('countUpdated', count)
-    //     io.emit('countUpdated', count);
-    // })
-
 })
 
 server.listen(port, () =>{
